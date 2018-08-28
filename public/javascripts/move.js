@@ -48,7 +48,7 @@ function startInterval(time) {
   return timer
 }
 
-app.addEventListener('click', function () {
+document.getElementById('change').addEventListener('click', function () {
   if (globalIntervalTimer) {
     clearInterval(globalIntervalTimer)
   }
