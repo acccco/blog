@@ -106,7 +106,7 @@ document.addEventListener(hiddenState.change, function () {
   if (globalIntervalTimer) {
     clearInterval(globalIntervalTimer)
   }
-  if (document[hiddenState.state] != hiddenState.hidden) {
+  if (document[hiddenState.state] !== hiddenState.hidden) {
     letUsMove()
     globalIntervalTimer = startInterval()
   }
