@@ -1,0 +1,12 @@
+
+@font-face {
+    font-family: 'index_font';
+    src: url('jdlibianjian.woff') format('woff'),
+    url('jdlibianjian.ttf') format('truetype'),
+    url('jdlibianjian.svg#jdlibianjian') format('svg'),
+    url('index_font.eot'),
+    url('index_font.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+

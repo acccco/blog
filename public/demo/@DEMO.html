@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html ng-app='@DEMO'>
+
+<head>
+    <title></title>
+    <script src="http://cdn.bootcss.com/angular.js/1.6.1/angular.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+    <script src="http://cdn.bootcss.com/Caret.js/0.3.1/jquery.caret.min.js"></script>
+    <style type="text/css">
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .demo {
+        width: 80%;
+        height: 300px;
+        border: 2px solid #ccc;
+        border-radius: 20px;
+        padding: 20px;
+        outline: none;
+    }
+    
+    .demo-wrap {
+        position: relative;
+    }
+    
+    .select-person {
+        position: absolute;
+        width: 160px;
+        border: 1px solid #dcdcdc;
+        border-radius: 4px;
+    }
+    
+    .select-person input {
+        width: 100%;
+        height: 40px;
+        border: none;
+        outline: none;
+        padding: 0 10px;
+    }
+    
+    .row {
+        display: flex;
+        height: 40px;
+        border-top: 1px solid #dcdcdc;
+        align-items: center;
+        cursor: pointer;
+    }
+    
+    .row:hover {
+        background: #ccc;
+    }
+    
+    .row .col-1 {
+        width: 40px;
+        flex: 0 0 40px;
+    }
+    
+    .row .col-2 {
+        width: 40px;
+        flex: auto;
+    }
+    
+    .img-wrap {
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        background: #4caf50;
+        margin: auto;
+        font-size: 12px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .at-text {
+        color: #4caf50;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="demo-wrap" ng-controller="Controller">
+        <!-- 文本输入框 -->
+        <div class="demo" id="demo" contenteditable="true" ng-keydown="keyIn($event)"></div>
+        <!-- 带有输入框的选人框 -->
+        <div class="select-person" id="selectPerson" ng-if="showSelect" ng-style="sPersonPosi">
+            <input type="text" id="searchPersonInput" ng-model="personSearchText" ng-blur="missFocus()">
+            <ul class="person-wrap">
+                <li class="row" ng-click="sPersonDone({fullName:'所有人'})">
+                    <div class="col-1">
+                        <div class="img-wrap">
+                            <span ng-bind="'所有'"></span>
+                        </div>
+                    </div>
+                    <div class="col-2">所有人</div>
+                </li>
+                <li class="row" ng-click="sPersonDone(item)" ng-repeat="item in atList | filter :{fullName: personSearchText}">
+                    <div class="col-1">
+                        <div class="img-wrap">
+                            <span ng-bind="item.fullName.slice(-2)"></span>
+                        </div>
+                    </div>
+                    <div class="col-2" ng-bind="item.fullName"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+angular.module('@DEMO', [])
+    .controller('Controller', ['$scope', '$timeout', function($scope, $timeout) {
+
+        $scope.atList = [{
+            fullName: '张三'
+        }, {
+            fullName: '李四'
+        }, {
+            fullName: '王五'
+        }, {
+            fullName: '战前孙'
+        }]
+
+        $scope.keyIn = function(e) {
+            var selection = getSelection();
+            var ele = document.getElementById('demo');
+            if (e.code == 'Digit2' && e.shiftKey) {
+
+                // 保存光标信息
+                lastSelection = {
+                    range: selection.getRangeAt(0),
+                    offset: selection.focusOffset,
+                    selection: selection
+                };
+                $scope.showSelect = true;
+
+                // 设置弹出框位置
+                var offset = $(ele).caret('offset');
+                $scope.sPersonPosi = {
+                    left: offset.left + 'px',
+                    top: offset.top + 30 + 'px'
+                };
+                $timeout(function() {
+                    $('#searchPersonInput')[0].focus();
+                })
+
+            } else if (e.code == 'Backspace') {
+
+                // 删除逻辑
+                // 1 ：由于在创建时默认会在 @xxx 后添加一个空格，
+                // 所以当得知光标位于 @xxx 之后的一个第一个字符后并按下删除按钮时，
+                // 应该将光标前的 @xxx 给删除
+                // 2 ：当光标位于 @xxx 中间时，按下删除按钮时应该将整个 @xxx 给删除。
+
+                var range = selection.getRangeAt(0);
+                var removeNode = null;
+                if (range.startOffset <= 1 && range.startContainer.parentElement.className != "at-text")
+                    removeNode = range.startContainer.previousElementSibling;
+                if (range.startContainer.parentElement.className == "at-text")
+                    removeNode = range.startContainer.parentElement;
+                if (removeNode)
+                    ele.removeChild(removeNode);
+
+            }
+        };
+
+        $scope.sPersonDone = function(person) {
+
+            // 成功选人后，关闭选择框，让输入框获取焦点。
+            $scope.showSelect = false;
+            var ele = $('#demo')[0];
+            ele.focus();
+
+            // 获取之前保留先来的信息。
+            // 需要修改 keyIn 的代码，保存选区以及光标信息，用于获取在光标焦点离开前，光标的位置
+            var selection = lastSelection.selection;
+            var range = lastSelection.range;
+            var textNode = range.startContainer;
+
+            // 删除 @ 符号。
+            range.setStart(textNode, range.endOffset);
+            range.setEnd(textNode, range.endOffset + 1);
+            range.deleteContents();
+
+            // 生成需要显示的内容，包括一个 span 和一个空格。
+            var spanNode1 = document.createElement('span');
+            var spanNode2 = document.createElement('span');
+            spanNode1.className = 'at-text';
+            spanNode1.innerHTML = '@' + person.fullName;
+            spanNode2.innerHTML = '&nbsp;';
+
+            // 将生成内容打包放在 Fragment 中，并获取生成内容的最后一个节点，也就是空格。
+            var frag = document.createDocumentFragment(),
+                node, lastNode;
+            frag.appendChild(spanNode1);
+            while ((node = spanNode2.firstChild)) {
+                lastNode = frag.appendChild(node);
+            }
+
+            // 将 Fragment 中的内容放入 range 中，并将光标放在空格之后。
+            range.insertNode(frag);
+            selection.extend(lastNode, 1);
+            selection.collapseToEnd();
+        };
+
+        $scope.missFocus = function() {
+            setTimeout(function() {
+                $scope.showSelect = false;
+            }, 100);
+        }
+    }]);
+</script>
+
+</html>
