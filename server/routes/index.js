@@ -1,6 +1,6 @@
 let express = require('express'),
   router = express.Router(),
-  qiniuOss = require('../util/imageServer'),
+  qiniuOss = require('../util/qiniuImageServer'),
   util = require('../util/util');
 
 /* GET home page. */
@@ -15,5 +15,7 @@ router.get('/indexBg', (req, res) => {
     res.json(util.randomArr(result, num));
   });
 });
+
+router.get('')
 
 module.exports = router;
