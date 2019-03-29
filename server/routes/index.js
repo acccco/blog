@@ -3,19 +3,24 @@ let express = require('express'),
   qiniuOss = require('../util/qiniuImageServer'),
   util = require('../util/util');
 
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
+/**
+ * 拦截所有的图片请求
+ */
+router.all('/picture/*', (res, req) => {
+  // if (false) {
+  //   req.sendFile(process.cwd() + '/resource/media/default/default1.jpg');
+  // }
+  req.sendFile(`${process.cwd()}/resource/media/${res.originalUrl}`);
+});
 
 router.get('/indexBg', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   let num = req.query.num || 10;
-  qiniuOss.getImages().then(function(result) {
+  qiniuOss.getImages().then(function (result) {
     res.json(util.randomArr(result, num));
   });
 });
 
-router.get('')
+router.get('');
 
 module.exports = router;

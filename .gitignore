@@ -5,5 +5,5 @@ TODOs.md
 .vscode
 .idea
 yarn.lock
-/public/demo
-/public/media
+resource
+
