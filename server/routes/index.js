@@ -1,7 +1,11 @@
-let express = require('express'),
-  router = express.Router(),
-  qiniuOss = require('../util/qiniuImageServer'),
-  util = require('../util/util');
+let express = require('express');
+let fs = require('fs');
+let router = express.Router();
+let util = require('../util/util');
+let qiniuOss = require('../util/qiniuImageServer');
+
+let files = fs.readdirSync(`${process.cwd()}/resource/media/picture`);
+let pictureNumber = 229;
 
 /**
  * 拦截所有的图片请求
@@ -10,13 +14,27 @@ router.all('/picture/*', (res, req) => {
   // if (false) {
   //   req.sendFile(process.cwd() + '/resource/media/default/default1.jpg');
   // }
-  req.sendFile(`${process.cwd()}/resource/media/${res.originalUrl}`);
+  // req.sendFile(`${process.cwd()}/resource/media/default/default.jpg`);
+  // return;
+  try {
+    let match = res.originalUrl.match(/^\/picture\/photo(\d*)/);
+    let pictureIndex = match[1];
+    if (pictureIndex >= pictureNumber) {
+      pictureIndex %= pictureNumber;
+      pictureIndex += 1;
+    }
+    req.sendFile(
+      `${process.cwd()}/resource/media/picture/photo${pictureIndex}.jpg`
+    );
+  } catch (e) {
+    req.sendFile(`${process.cwd()}/resource/media/default/default.jpg`);
+  }
 });
 
 router.get('/indexBg', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   let num = req.query.num || 10;
-  qiniuOss.getImages().then(function (result) {
+  qiniuOss.getImages().then(function(result) {
     res.json(util.randomArr(result, num));
   });
 });
