@@ -4,18 +4,14 @@ let router = express.Router();
 let util = require('../util/util');
 let qiniuOss = require('../util/qiniuImageServer');
 
-let files = fs.readdirSync(`${process.cwd()}/resource/media/picture`);
 let pictureNumber = 229;
 
 /**
  * 拦截所有的图片请求
  */
 router.all('/picture/*', (res, req) => {
-  // if (false) {
-  //   req.sendFile(process.cwd() + '/resource/media/default/default1.jpg');
-  // }
-  // req.sendFile(`${process.cwd()}/resource/media/default/default.jpg`);
-  // return;
+  req.sendFile(`${process.cwd()}/resource/media/default/default.jpg`);
+  return;
   try {
     let match = res.originalUrl.match(/^\/picture\/photo(\d*)/);
     let pictureIndex = match[1];
@@ -38,7 +34,5 @@ router.get('/indexBg', (req, res) => {
     res.json(util.randomArr(result, num));
   });
 });
-
-router.get('');
 
 module.exports = router;
