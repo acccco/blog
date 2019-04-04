@@ -1,16 +1,19 @@
 let express = require('express');
 let fs = require('fs');
+let path = require('path');
 let router = express.Router();
 let util = require('../util/util');
 let qiniuOss = require('../util/qiniuImageServer');
 
 let pictureNumber = 229;
 
+let resourcePath = path.join(__dirname, '../../resource/');
+
 /**
  * 拦截所有的图片请求
  */
 router.all('/picture/*', (res, req) => {
-  req.sendFile(`${process.cwd()}/resource/media/default/default.jpg`);
+  req.sendFile(resourcePath + 'media/default/default.jpg');
   return;
   try {
     let match = res.originalUrl.match(/^\/picture\/photo(\d*)/);
