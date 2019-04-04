@@ -5,10 +5,10 @@
 .animation-item {
   &:before {
     position: absolute;
-    content: '';
+    content: "";
     width: 100%;
     height: 100%;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, .5);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
     z-index: 3;
     box-sizing: border-box;
   }
@@ -23,7 +23,8 @@
   box-sizing: content-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -41,7 +42,8 @@ body {
   position: relative;
 }
 
-#bg-show-wrap, #content {
+#bg-show-wrap,
+#content {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -72,10 +74,10 @@ body {
 .all-wrap {
   width: 300px;
   height: 300px;
-  background-color: rgba(255, 255, 255, .6);
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 4px;
-  box-shadow: 0 0 14px rgba(200, 200, 200, .8), inset 0 0 10px rgba(192, 192, 192, .6);
-  animation: xBounceInDown .8s;
+  box-shadow: 0 0 14px rgba(200, 200, 200, 0.8), inset 0 0 10px rgba(192, 192, 192, 0.6);
+  animation: xBounceInDown 0.8s;
   animation-fill-mode: forwards;
   .bounceInUp {
     transform: translate3d(0, 3000px, 0);
@@ -83,7 +85,7 @@ body {
     animation-fill-mode: forwards;
   }
   .title-img {
-    animation-delay: .8s;
+    animation-delay: 0.8s;
     width: 80px;
     height: 80px;
     margin: 0 auto;
@@ -108,7 +110,7 @@ body {
     font-size: 20px;
     padding: 15px 0;
     font-weight: bolder;
-    font-family: 'index_font';
+    font-family: "index_font";
     line-height: 30px;
     position: relative;
     border-bottom: #000 1px solid;
@@ -121,7 +123,8 @@ body {
     &:after {
       bottom: -5px;
     }
-    &:before, &:after {
+    &:before,
+    &:after {
       display: block;
       content: "";
       width: 7px;
@@ -130,9 +133,9 @@ body {
       position: absolute;
       left: 50%;
       margin-left: -5px;
-      background: #FFF;
+      background: #fff;
       border-radius: 100%;
-      box-shadow: #FFF 0 0 0 5px;
+      box-shadow: #fff 0 0 0 5px;
     }
   }
   .title-link {
