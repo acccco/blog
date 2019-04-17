@@ -121,16 +121,6 @@ function letUsMove() {
   });
 }
 
-// 点击切换动画
-document.getElementById('change').addEventListener('click', () => {
-  if (globalIntervalTimer) {
-    clearInterval(globalIntervalTimer);
-    globalIntervalTimer = null;
-  }
-  letUsMove();
-  globalIntervalTimer = startInterval();
-});
-
 // 加载图片
 axios.get('/indexBg?num=20').then(res => {
   let imgList = [];
@@ -148,40 +138,22 @@ axios.get('/indexBg?num=20').then(res => {
   });
 });
 
-// 获得浏览器窗口隐藏事件
-function getHidden() {
-  let hidden, state, visibilityChange;
-  if (typeof document.hidden !== 'undefined') {
-    hidden = 'hidden';
-    visibilityChange = 'visibilitychange';
-    state = 'visibilityState';
-  } else if (typeof document.mozHidden !== 'undefined') {
-    hidden = 'mozHidden';
-    visibilityChange = 'mozvisibilitychange';
-    state = 'mozVisibilityState';
-  } else if (typeof document.msHidden !== 'undefined') {
-    hidden = 'msHidden';
-    visibilityChange = 'msvisibilitychange';
-    state = 'msVisibilityState';
-  } else if (typeof document.webkitHidden !== 'undefined') {
-    hidden = 'webkitHidden';
-    visibilityChange = 'webkitvisibilitychange';
-    state = 'webkitVisibilityState';
+// 点击切换动画
+document.getElementById('change').addEventListener('click', () => {
+  if (globalIntervalTimer) {
+    clearInterval(globalIntervalTimer);
+    globalIntervalTimer = null;
   }
-  return {
-    hidden: hidden,
-    state: state,
-    change: visibilityChange
-  };
-}
+  letUsMove();
+  globalIntervalTimer = startInterval();
+});
 
-const hiddenState = getHidden();
-
-document.addEventListener(hiddenState.change, () => {
+// 窗口隐藏后清除定时器，显示后开启定时器
+document.addEventListener('visibilitychange', () => {
   if (globalIntervalTimer) {
     clearInterval(globalIntervalTimer);
   }
-  if (document[hiddenState.state] !== hiddenState.hidden) {
+  if (document.hidden !== 'hidden') {
     letUsMove();
     globalIntervalTimer = startInterval();
   }
