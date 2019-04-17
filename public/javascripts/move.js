@@ -1,14 +1,14 @@
-var app = document.getElementById('app');
+const app = document.getElementById('app');
 
 // 创建矩阵运动对象
-var move = mChange.makeMatrixChange(app, {
+const move = mChange.makeMatrixChange(app, {
   images: [],
   row: 7,
   col: 9
 });
 
 // animate 下的入场动画的名称
-var inAnimate = [
+const inAnimate = [
   'flash',
   'bounceIn',
   'bounceInDown',
@@ -45,7 +45,7 @@ var inAnimate = [
 ];
 
 // animate 下的出场动画的名称
-var outAnimate = [
+const outAnimate = [
   'flash',
   'bounceOut',
   'bounceOutDown',
@@ -81,18 +81,18 @@ var outAnimate = [
   'slideOutRight',
   'slideOutUp'
 ];
-var globalIntervalTimer = null;
-var isAnimating = false;
+let globalIntervalTimer = null;
+let isAnimating = false;
 
 // 预加载图片方法
 function preLoadImg(src) {
-  return new Promise(function(resolve, reject) {
-    var img = new Image();
+  return new Promise((resolve, reject) => {
+    const img = new Image();
     img.src = src;
-    img.onload = function() {
+    img.onload = () => {
       resolve(src);
     };
-    img.onerror = function() {
+    img.onerror = () => {
       reject(src);
     };
   });
@@ -106,10 +106,9 @@ function getRandom(min, max) {
 // 开启背景自动切换
 function startInterval(time) {
   if (!time) time = 15000;
-  var timer = setInterval(function() {
+  return setInterval(() => {
     letUsMove();
   }, time);
-  return timer;
 }
 
 // 动画
@@ -123,7 +122,7 @@ function letUsMove() {
 }
 
 // 点击切换动画
-document.getElementById('change').addEventListener('click', function() {
+document.getElementById('change').addEventListener('click', () => {
   if (globalIntervalTimer) {
     clearInterval(globalIntervalTimer);
     globalIntervalTimer = null;
@@ -133,16 +132,16 @@ document.getElementById('change').addEventListener('click', function() {
 });
 
 // 加载图片
-axios.get('http://acohome.cn/indexBg?num=20').then(function(res) {
-  var imgList = [];
-  preLoadImg(res.data[0]).then(function(src) {
+axios.get('/indexBg?num=20').then(res => {
+  let imgList = [];
+  preLoadImg(res.data[0]).then(src => {
     imgList.push(src);
     move.changeImages(imgList);
     letUsMove();
     globalIntervalTimer = startInterval();
   });
-  res.data.forEach(function(src) {
-    preLoadImg(src).then(function(src) {
+  res.data.forEach(src => {
+    preLoadImg(src).then(src => {
       imgList.push(src);
       move.changeImages(imgList);
     });
@@ -151,7 +150,7 @@ axios.get('http://acohome.cn/indexBg?num=20').then(function(res) {
 
 // 获得浏览器窗口隐藏事件
 function getHidden() {
-  var hidden, state, visibilityChange;
+  let hidden, state, visibilityChange;
   if (typeof document.hidden !== 'undefined') {
     hidden = 'hidden';
     visibilityChange = 'visibilitychange';
@@ -176,9 +175,9 @@ function getHidden() {
   };
 }
 
-var hiddenState = getHidden();
+const hiddenState = getHidden();
 
-document.addEventListener(hiddenState.change, function() {
+document.addEventListener(hiddenState.change, () => {
   if (globalIntervalTimer) {
     clearInterval(globalIntervalTimer);
   }

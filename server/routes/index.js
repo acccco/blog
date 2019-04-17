@@ -1,33 +1,15 @@
 let express = require('express');
-let fs = require('fs');
-let path = require('path');
+let md5 = require('blueimp-md5');
 let router = express.Router();
 let util = require('../util/util');
 let qiniuOss = require('../util/qiniuImageServer');
 
-let pictureNumber = 229;
-
-let resourcePath = path.join(__dirname, '../../resource/');
-
-/**
- * 拦截所有的图片请求
- */
-router.all('/picture/*', (res, req) => {
-  req.sendFile(resourcePath + 'media/default/default.jpg');
-  return;
-  try {
-    let match = res.originalUrl.match(/^\/picture\/photo(\d*)/);
-    let pictureIndex = match[1];
-    if (pictureIndex >= pictureNumber) {
-      pictureIndex %= pictureNumber;
-      pictureIndex += 1;
-    }
-    req.sendFile(
-      `${process.cwd()}/resource/media/picture/photo${pictureIndex}.jpg`
-    );
-  } catch (e) {
-    req.sendFile(`${process.cwd()}/resource/media/default/default.jpg`);
-  }
+router.get('/authCode', (req, res) => {
+  let date = new Date();
+  date.setHours(4, 25, 00, 000);
+  res.json({
+    code: md5(date.valueOf())
+  });
 });
 
 router.get('/indexBg', (req, res) => {
