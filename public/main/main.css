@@ -19,7 +19,7 @@ li {
 }
 
 body {
-  background-image: url("/image/bg.jpg");
+  background-image: url("/main/image/bg.jpg");
   background-size: cover;
   position: relative;
 }
