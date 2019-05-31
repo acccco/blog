@@ -1,80 +1,80 @@
 <!DOCTYPE html>
 <html lang="zh_CN">
-  <head>
-    <meta charset="UTF-8" />
-    <title>aco | 阿飞</title>
-    <base target="_blank" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
-    />
-    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
-    <link
-      rel="stylesheet"
-      href="//cdn.bootcss.com/animate.css/3.7.0/animate.min.css"
-    />
-    <link rel="stylesheet" href="stylesheets/main.css" />
-  </head>
-  <body>
-    <div id="app"></div>
-    <section class="content center">
-      <div class="all-wrap animated bounceInDown">
-        <div class="title-img animated bounceInUp">
-          <div class="img-wrap animated flipInX">
-            <img class="" src="/image/head.jpg" alt="" />
-          </div>
-        </div>
-        <div class="title-msg animated bounceInUp" id="font1">
-          <p>鸿鹄，安知燕雀之志！</p>
-          <p>室，陋，茗；人，微，著</p>
-        </div>
-        <div class="title-link">
-          <ul class="link-wrap center">
-            <li class="link-item">
-              <a
-                class="center animated flipInY"
-                href="https://github.com/acccco"
-              >
-                <i class="iconfont icon-github"></i>
-              </a>
-            </li>
-            <li class="link-item">
-              <a class="center animated flipInY" href="http://blog.acohome.cn">
-                <i class="iconfont icon-article"></i>
-              </a>
-            </li>
-            <li class="link-item">
-              <a class="center animated flipInY" id="bir-btn">
-                <i class="iconfont icon-cake"></i>
-              </a>
-            </li>
-            <li class="link-item">
-              <a class="center animated flipInY" href="mailto:wwsxuan@163.com">
-                <i class="iconfont icon-email"></i>
-              </a>
-            </li>
-            <li class="link-item">
-              <a
-                class="center animated flipInY"
-                id="change"
-                href="javascript:void(0)"
-                target="_self"
-              >
-                <i class="iconfont icon-next"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
+<head>
+  <meta charset="UTF-8"/>
+  <title>aco | 阿飞</title>
+  <base target="_blank"/>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, user-scalable=no"
+  />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+  <link
+    rel="stylesheet"
+    href="//cdn.bootcss.com/animate.css/3.7.0/animate.min.css"
+  />
+  <link rel="stylesheet" href="stylesheets/main.css"/>
+</head>
+<body>
+<div id="app"></div>
+<section class="content center">
+  <div class="all-wrap animated bounceInDown">
+    <div class="title-img animated bounceInUp">
+      <div class="img-wrap animated flipInX">
+        <img class="" src="/image/head.jpg" alt=""/>
       </div>
-    </section>
-  </body>
-  <script src="//cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/matrixchange/dist/matrixChange.js"></script>
-  <script src="javascripts/move.js"></script>
-  <script>
-    let birthdayBtn = document.getElementById('bir-btn');
-    axios.get('/authCode').then(res => {
-      birthdayBtn.href = `http://birthday.minimo.live?addon=${res.data.code}`;
-    });
-  </script>
+    </div>
+    <div class="title-msg animated bounceInUp" id="font1">
+      <p>鸿鹄，安知燕雀之志！</p>
+      <p>室，陋，茗；人，微，著</p>
+    </div>
+    <div class="title-link">
+      <ul class="link-wrap center">
+        <li class="link-item">
+          <a
+            class="center animated flipInY"
+            href="https://github.com/acccco"
+          >
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+        <li class="link-item">
+          <a class="center animated flipInY" href="http://blog.acohome.cn">
+            <i class="iconfont icon-article"></i>
+          </a>
+        </li>
+        <li class="link-item">
+          <a class="center animated flipInY" id="bir-btn">
+            <i class="iconfont icon-cake"></i>
+          </a>
+        </li>
+        <li class="link-item">
+          <a class="center animated flipInY" href="mailto:wwsxuan@163.com">
+            <i class="iconfont icon-email"></i>
+          </a>
+        </li>
+        <li class="link-item">
+          <a
+            class="center animated flipInY"
+            id="change"
+            href="javascript:void(0)"
+            target="_self"
+          >
+            <i class="iconfont icon-next"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+</body>
+<script src="//cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/matrixchange/dist/matrixChange.js"></script>
+<script src="javascripts/move.js"></script>
+<script>
+  let birthdayBtn = document.getElementById('bir-btn');
+  axios.get('/authCode').then(res => {
+    birthdayBtn.href = `http://birthday.minimo.live?addon=${res.data.code}`;
+  });
+</script>
 </html>
