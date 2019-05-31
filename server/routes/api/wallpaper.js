@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {wallpaperQuery} = require('../../util/mysql');
-const {queryById, getAllNum, queryByPage} = require('./wallpaperSql');
+const {queryById, getAllNum, queryByPage, getLatest} = require('./wallpaperSql');
 let prefix = 'http://wallpapercdn.acohome.cn/';
 
 router.get('/', async (req, res) => {
@@ -39,11 +39,27 @@ router.get('/', async (req, res) => {
 
 });
 
+router.get('/latest', async (req, res) => {
+  try {
+    let result = await wallpaperQuery(getLatest());
+    let data = result[0];
+    data.uri = prefix + data.filename;
+    res.json({
+      code: 0,
+      data: data
+    });
+  } catch (err) {
+    res.json({
+      code: 'w-get-latest',
+      err
+    });
+  }
+});
+
 router.get('/:id', async (req, res) => {
   let id = req.params.id;
-  let sql = queryById(id);
   try {
-    let result = await wallpaperQuery(sql);
+    let result = await wallpaperQuery(queryById(id));
     let data = result[0];
     if (data) {
       data.uri = prefix + data.filename;
