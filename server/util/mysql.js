@@ -15,11 +15,3 @@ exports.wallpaperQuery = (sql, params) => new Promise((resolve, reject) => {
     resolve(result);
   });
 });
-
-exports.wallpaperQueryConnect = () => {
-  wallpaper.connect();
-};
-
-exports.wallpaperQueryEnd = () => {
-  wallpaper.end();
-};
