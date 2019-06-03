@@ -4,6 +4,11 @@ const {wallpaperQuery} = require('../../util/mysql');
 const {queryById, getAllNum, queryByPage, getLatest} = require('./wallpaperSql');
 let prefix = 'http://wallpapercdn.acohome.cn/';
 
+router.all('*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 router.get('/', async (req, res) => {
   let pageNum = 1;
   let pageSize = 10;
