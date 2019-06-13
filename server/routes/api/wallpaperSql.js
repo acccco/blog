@@ -1,6 +1,9 @@
 exports.queryById = (id) =>
   `SELECT * FROM wallpaper WHERE id = ${id}`;
 
+exports.queryByBefore = (pass) =>
+  `SELECT * FROM wallpaper ORDER BY date DESC LIMIT ${pass},1`;
+
 exports.queryByPage = (pageNum, pageSize) =>
   `SELECT * FROM wallpaper ORDER BY date DESC LIMIT ${pageNum * pageSize - pageSize},${pageSize}`;
 
