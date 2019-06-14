@@ -3,9 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const history = require('connect-history-api-fallback');
 
 const indexRouter = require('./routes/index');
+const redirectRouter = require('./routes/redirect');
 const wallpaperRouter = require('./routes/api/wallpaper');
 
 const app = express();
@@ -19,16 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use(history({
-  rewrites: [
-    {
-      from: /\/static\/wallpaper4web\/?[^.]*$/,
-      to: '/static/wallpaper4web/index.html'
-    }
-  ]
-}));
-
 app.use('/', indexRouter);
+app.use('/', redirectRouter);
 app.use('/api/wallpaper', wallpaperRouter);
 
 app.use(express.static(path.join(__dirname, '../public')));
