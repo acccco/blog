@@ -22,8 +22,8 @@ app.use(cookieParser());
 app.use(history({
   rewrites: [
     {
-      from: /\/static\/wallpaper4pc\/[^.]*$/,
-      to: '/static/wallpaper4pc/index.html'
+      from: /\/static\/wallpaper4web\/[^.]*$/,
+      to: '/static/wallpaper4web/index.html'
     }
   ]
 }));
