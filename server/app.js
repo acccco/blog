@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const history = require('connect-history-api-fallback');
 
 const indexRouter = require('./routes/index');
 const wallpaperRouter = require('./routes/api/wallpaper');
@@ -17,6 +18,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+
+app.use(history({
+  rewrites: [
+    {
+      from: /\/static\/wallpaper4pc\/[^.]*$/,
+      to: '/static/wallpaper4pc/index.html'
+    }
+  ]
+}));
 
 app.use('/', indexRouter);
 app.use('/api/wallpaper', wallpaperRouter);
