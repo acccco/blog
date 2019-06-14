@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(history({
   rewrites: [
     {
-      from: /\/static\/wallpaper4web\/[^.]*$/,
+      from: /\/static\/wallpaper4web\/?[^.]*$/,
       to: '/static/wallpaper4web/index.html'
     }
   ]
