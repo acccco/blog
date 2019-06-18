@@ -1,18 +1,28 @@
-const createError = require('http-errors');
-const express = require('express');
 const path = require('path');
+const express = require('express');
+const nunjucks = require('nunjucks');
+const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const redirectRouter = require('./routes/redirect');
 const wallpaperRouter = require('./routes/api/wallpaper');
+const aliyunRouter = require('./routes/api/aliyun');
+
+// 执行定时任务
+const scheduleJob = require('./schedule/');
+scheduleJob();
 
 const app = express();
 
 // view engine setup
+app.set('view engine', 'njk');
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+nunjucks.configure(path.join(__dirname, 'views'), {
+  autoescape: true,
+  express: app
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -22,6 +32,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/', redirectRouter);
 app.use('/api/wallpaper', wallpaperRouter);
+app.use('/api/aliyun', aliyunRouter);
 
 app.use(express.static(path.join(__dirname, '../public')));
 
