@@ -2,9 +2,10 @@ const mysql = require('mysql');
 
 const {mysql: mysqlInfo} = require('../config');
 
-const wallpaper = mysql.createConnection(Object.assign({
-  database: 'wallpaper'
-}, mysqlInfo));
+const wallpaper = mysql.createConnection({
+  database: 'wallpaper',
+  ...mysqlInfo
+});
 
 exports.wallpaperQuery = (sql, params) => new Promise((resolve, reject) => {
   wallpaper.query(sql, params, (err, result) => {

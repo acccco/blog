@@ -16,3 +16,9 @@ exports.randomArr = (arr, num) => {
   }
   return sendArr.slice(0, num);
 };
+
+exports.sleep = (time) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, time);
+  });
+};

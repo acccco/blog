@@ -20,4 +20,8 @@ router.get('/indexBg', (req, res) => {
   });
 });
 
+router.get('/ces', (req, res) => {
+  res.render('ces');
+});
+
 module.exports = router;
