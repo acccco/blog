@@ -2,12 +2,13 @@
 <html lang="zh_CN">
 <head>
   <meta charset="UTF-8"/>
-  <title>aco | 阿飞</title>
+  <title>ACO | 阿飞</title>
   <base target="_blank"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
   <meta name="renderer" content="webkit|ie-comp|ie-stand"/>
   <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.0/animate.min.css"/>
   <link rel="stylesheet" href="main/main.css"/>
+  <script src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
 </head>
 <body>
 <div id="app"></div>
@@ -15,12 +16,12 @@
   <div class="all-wrap animated bounceInDown">
     <div class="title-img animated bounceInUp">
       <div class="img-wrap animated flipInX">
-        <img class="" src="/main/image/head.jpg" alt=""/>
+        <img class="" src="http://blogcdn.acohome.cn/head.jpg" alt=""/>
       </div>
     </div>
-    <div class="title-msg animated bounceInUp" id="font1">
-      <p>鸿鹄，安知燕雀之志！</p>
-      <p>室，陋，茗；人，微，著</p>
+    <div class="title-msg animated bounceInUp" id="font">
+      <p>芝兰生于空谷</p>
+      <p>不以无人而不芳</p>
     </div>
     <div class="title-link">
       <ul class="link-wrap center">
@@ -67,5 +68,7 @@
   axios.get('/authCode').then(res => {
     birthdayBtn.href = `http://birthday.minimo.live?addon=${res.data.code}`;
   });
+  $youziku.load('#font', '58dd5053ac13421c82a2f90bfb694f76', 'fontfamily');
+  $youziku.draw();
 </script>
 </html>

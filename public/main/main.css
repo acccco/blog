@@ -1,5 +1,4 @@
 @import url(font/iconfont.css);
-@import url(font/font.css);
 
 * {
   padding: 0;
@@ -84,9 +83,9 @@ body {
   border-top: #000 1px solid;
   border-bottom: #000 1px solid;
   margin: 0 auto;
+  font-family: 'Libian SC', -apple-system, 'Microsoft YaHei', serif;
   font-size: 20px;
   font-weight: bolder;
-  font-family: "index_font";
   line-height: 30px;
   text-align: center;
   animation-delay: 1.1s;
