@@ -9,24 +9,16 @@ const move = mChange.makeMatrixChange(app, {
 
 // animate 下的入场动画的名称
 const inAnimate = [
-  'flash',
   'bounceIn',
-  'bounceInDown',
-  'bounceInLeft',
-  'bounceInRight',
   'bounceInUp',
+  'bounceInDown',
   'fadeIn',
-  'fadeInDown',
-  'fadeInDownBig',
-  'fadeInLeft',
-  'fadeInLeftBig',
-  'fadeInRight',
-  'fadeInRightBig',
   'fadeInUp',
-  'fadeInUpBig',
+  'fadeInDown',
+  'fadeInLeft',
+  'fadeInRight',
   'flipInX',
   'flipInY',
-  'lightSpeedIn',
   'rotateIn',
   'rotateInDownLeft',
   'rotateInDownRight',
@@ -34,52 +26,35 @@ const inAnimate = [
   'rotateInUpRight',
   'rollIn',
   'zoomIn',
+  'zoomInUp',
   'zoomInDown',
   'zoomInLeft',
   'zoomInRight',
-  'zoomInUp',
-  'slideInDown',
-  'slideInLeft',
-  'slideInRight',
-  'slideInUp'
 ];
 
 // animate 下的出场动画的名称
 const outAnimate = [
-  'flash',
   'bounceOut',
   'bounceOutDown',
-  'bounceOutLeft',
-  'bounceOutRight',
   'bounceOutUp',
   'fadeOut',
   'fadeOutDown',
-  'fadeOutDownBig',
-  'fadeOutLeft',
-  'fadeOutLeftBig',
-  'fadeOutRight',
-  'fadeOutRightBig',
   'fadeOutUp',
-  'fadeOutUpBig',
+  'fadeOutRight',
+  'fadeOutLeft',
   'flipOutX',
   'flipOutY',
-  'lightSpeedOut',
   'rotateOut',
-  'rotateOutDownLeft',
-  'rotateOutDownRight',
-  'rotateOutUpLeft',
   'rotateOutUpRight',
-  'hinge',
+  'rotateOutUpLeft',
+  'rotateOutDownRight',
+  'rotateOutDownLeft',
   'rollOut',
   'zoomOut',
   'zoomOutDown',
-  'zoomOutLeft',
-  'zoomOutRight',
   'zoomOutUp',
-  'slideOutDown',
-  'slideOutLeft',
-  'slideOutRight',
-  'slideOutUp'
+  'zoomOutRight',
+  'zoomOutLeft',
 ];
 let globalIntervalTimer = null;
 let isAnimating = false;
@@ -113,25 +88,27 @@ function startInterval(time) {
 
 // 动画
 function letUsMove() {
+  let animateIndex = getRandom(0, inAnimate.length - 1)
   move.movePoint(mChange.mode[getRandom(0, mChange.mode.length - 1)], {
     animate: true,
     // 可以改成其他 animate.css 的动画
-    classNameIn: 'animated ' + inAnimate[getRandom(0, inAnimate.length - 1)],
-    classNameOut: 'animated ' + outAnimate[getRandom(0, outAnimate.length - 1)]
+    classNameIn: 'animated ' + inAnimate[animateIndex],
+    classNameOut: 'animated ' + outAnimate[animateIndex]
   });
 }
 
 // 加载图片
-axios.get('/indexBg?num=20').then(res => {
+axios.get('/api/wallpaper?pageNum=1&pageSize=10').then(res => {
   let imgList = [];
-  preLoadImg(res.data[0]).then(src => {
+  console.log(res)
+  preLoadImg(res.data.data.list[0].uri).then(src => {
     imgList.push(src);
     move.changeImages(imgList);
     letUsMove();
     globalIntervalTimer = startInterval();
   });
-  res.data.forEach(src => {
-    preLoadImg(src).then(src => {
+  res.data.data.list.forEach(src => {
+    preLoadImg(src.uri).then(src => {
       imgList.push(src);
       move.changeImages(imgList);
     });
