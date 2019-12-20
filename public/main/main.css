@@ -39,6 +39,23 @@ body {
   z-index: 2;
 }
 
+.icp {
+  position: absolute;
+  font-size: 14px;
+  left: 10px;
+  bottom: 10px;
+  color: #666;
+}
+
+.icp a {
+  color: #666;
+  text-decoration: none;
+}
+
+.icp a:hover {
+  color: #000;
+}
+
 .center {
   display: flex;
   align-items: center;
@@ -49,7 +66,8 @@ body {
   width: 300px;
   height: 300px;
   border-radius: 4px;
-  box-shadow: 0 0 14px rgba(200, 200, 200, 0.8), inset 0 0 10px rgba(192, 192, 192, 0.6);
+  box-shadow: 0 0 14px rgba(200, 200, 200, 0.8),
+    inset 0 0 10px rgba(192, 192, 192, 0.6);
   background-color: rgba(255, 255, 255, 0.6);
 }
 
@@ -83,7 +101,7 @@ body {
   border-top: #000 1px solid;
   border-bottom: #000 1px solid;
   margin: 0 auto;
-  font-family: 'Libian SC', -apple-system, 'Microsoft YaHei', serif;
+  font-family: "Libian SC", -apple-system, "Microsoft YaHei", serif;
   font-size: 20px;
   font-weight: bolder;
   line-height: 30px;
@@ -100,7 +118,8 @@ body {
   bottom: -5px;
 }
 
-.all-wrap .title-msg:before, .all-wrap .title-msg:after {
+.all-wrap .title-msg:before,
+.all-wrap .title-msg:after {
   content: "";
   display: block;
   width: 7px;
