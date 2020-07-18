@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const _ = require("lodash");
 
 exports.randomArr = (arr, num) => {
   num = num || arr.length;
@@ -18,7 +18,7 @@ exports.randomArr = (arr, num) => {
 };
 
 exports.sleep = (time) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, time);
   });
 };

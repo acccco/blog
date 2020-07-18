@@ -1,15 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {wallpaperQuery} = require('../../util/mysql');
-const {queryById, getAllNum, queryByPage, queryByBefore} = require('./wallpaperSql');
-let prefix = 'http://wallpapercdn.acohome.cn/';
+const { wallpaperQuery } = require("../../util/mysql");
+const {
+  queryById,
+  getAllNum,
+  queryByPage,
+  queryByBefore
+} = require("./wallpaperSql");
+let prefix = "http://wallpapercdn.acohome.cn/";
 
-router.all('*', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+router.all("*", (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
   next();
 });
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   let pageNum = 1;
   let pageSize = 10;
 
@@ -24,7 +29,7 @@ router.get('/', async (req, res) => {
   try {
     let total = await wallpaperQuery(getAllNum());
     let result = await wallpaperQuery(queryByPage(pageNum, pageSize));
-    result.forEach(item => item.uri = prefix + item.filename);
+    result.forEach((item) => (item.uri = prefix + item.filename));
     res.json({
       code: 0,
       data: {
@@ -33,18 +38,18 @@ router.get('/', async (req, res) => {
         total: total[0].total,
         length: result.length,
         hasNext: pageNum * pageSize < total[0].total,
-        list: result,
+        list: result
       }
     });
   } catch (err) {
     console.error(err);
     res.json({
-      code: 'w-get-page'
+      code: "w-get-page"
     });
   }
 });
 
-router.get('/latest', async (req, res) => {
+router.get("/latest", async (req, res) => {
   try {
     let result = await wallpaperQuery(queryByBefore(0));
     let data = result[0];
@@ -56,12 +61,12 @@ router.get('/latest', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.json({
-      code: 'w-get-latest'
+      code: "w-get-latest"
     });
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   let id = req.params.id;
   try {
     let result = await wallpaperQuery(queryById(id));
@@ -74,12 +79,12 @@ router.get('/:id', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.json({
-      code: 'w-get-id'
+      code: "w-get-id"
     });
   }
 });
 
-router.get('/before/:day', async (req, res) => {
+router.get("/before/:day", async (req, res) => {
   let day = req.params.day;
   try {
     let total = (await wallpaperQuery(getAllNum()))[0].total;
@@ -97,13 +102,15 @@ router.get('/before/:day', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.json({
-      code: 'w-get-before'
+      code: "w-get-before"
     });
   }
 });
 
-router.get('/download/:filename', async (req, res) => {
-  res.redirect(prefix + req.params.filename + '?attname=' + req.params.filename);
+router.get("/download/:filename", async (req, res) => {
+  res.redirect(
+    prefix + req.params.filename + "?attname=" + req.params.filename
+  );
 });
 
 module.exports = router;
