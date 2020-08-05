@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { wallpaperQuery } = require("../../util/mysql");
 const {
   queryById,
   getAllNum,
   queryByPage,
   queryByBefore
-} = require("./wallpaperSql");
-let prefix = "http://wallpapercdn.acohome.cn/";
+} = require("./wallpaper-sql");
+const { query } = require("../../util/mysql");
+const prefix = "http://wallpapercdn.acohome.cn/";
 
 router.all("*", (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -27,8 +27,8 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    let total = await wallpaperQuery(getAllNum());
-    let result = await wallpaperQuery(queryByPage(pageNum, pageSize));
+    let total = await query("wallpaper", getAllNum());
+    let result = await query("wallpaper", queryByPage(pageNum, pageSize));
     result.forEach((item) => (item.uri = prefix + item.filename));
     res.json({
       code: 0,
@@ -51,7 +51,7 @@ router.get("/", async (req, res) => {
 
 router.get("/latest", async (req, res) => {
   try {
-    let result = await wallpaperQuery(queryByBefore(0));
+    let result = await query("wallpaper", queryByBefore(0));
     let data = result[0];
     data.uri = prefix + data.filename;
     res.json({
@@ -69,7 +69,7 @@ router.get("/latest", async (req, res) => {
 router.get("/:id", async (req, res) => {
   let id = req.params.id;
   try {
-    let result = await wallpaperQuery(queryById(id));
+    let result = await query("wallpaper", queryById(id));
     let data = result[0];
     data.uri = prefix + data.filename;
     res.json({
@@ -87,12 +87,11 @@ router.get("/:id", async (req, res) => {
 router.get("/before/:day", async (req, res) => {
   let day = req.params.day;
   try {
-    let total = (await wallpaperQuery(getAllNum()))[0].total;
-    console.log(total);
+    let total = (await query("wallpaper", getAllNum()))[0].total;
     if (day >= total) {
       day = total - 1;
     }
-    let result = await wallpaperQuery(queryByBefore(day));
+    let result = await query("wallpaper", queryByBefore(day));
     let data = result[0];
     data.uri = prefix + data.filename;
     res.json({
