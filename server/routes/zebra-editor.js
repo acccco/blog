@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { insert } = require("../../util/mysql");
+const { insert } = require("../util/mysql");
 
 router.all("*", (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

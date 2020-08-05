@@ -6,7 +6,7 @@ const {
   queryByPage,
   queryByBefore
 } = require("./wallpaper-sql");
-const { query } = require("../../util/mysql");
+const { query } = require("../util/mysql");
 const prefix = "http://wallpapercdn.acohome.cn/";
 
 router.all("*", (req, res, next) => {
